@@ -61,17 +61,19 @@ public class Universo {
         FileWriter fw = null;
         BufferedWriter bw = null;
         String aux = "";
-        try {
-            fw = new FileWriter(archivo, true);
-            bw = new BufferedWriter(fw);
-            for (Ser_Vivo sv : listaSeres) {
-                aux += sv.getNombre() + "|" + sv.getPoder() + "|" + sv.getAños() + "|" + sv.getPlaneta() + "|" + sv.getRaza() + "\n";
+        for (Ser_Vivo sv : listaSeres) {
+            try {
+                fw = new FileWriter(archivo, true);
+                bw = new BufferedWriter(fw);
+                aux += sv.getNombre() + "|" + sv.getPoder() + "|" + sv.getAños()
+                        + "|" + sv.getPlaneta() + "|" + sv.getRaza() + "\n";
                 bw.write(aux);
                 bw.newLine();
+
+            } catch (Exception e) {
             }
-            bw.flush();
-        } catch (Exception ex) {
         }
+        bw.flush();
         bw.close();
         fw.close();
     }

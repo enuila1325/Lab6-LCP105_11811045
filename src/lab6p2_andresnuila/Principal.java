@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Principal extends javax.swing.JFrame {
-    
+
     public Principal() {
         initComponents();
         DefaultComboBoxModel cm = (DefaultComboBoxModel) cb_Raza.getModel();
@@ -25,7 +25,7 @@ public class Principal extends javax.swing.JFrame {
         cb_Raza.setModel(cm);
         setLocationRelativeTo(null);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -187,6 +187,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.add(mi_modSV);
 
         mi_elimSV.setText("Eliminar Ser Vivos");
+        mi_elimSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_elimSVActionPerformed(evt);
+            }
+        });
         jMenu2.add(mi_elimSV);
 
         jMenuBar1.add(jMenu2);
@@ -222,10 +227,11 @@ public class Principal extends javax.swing.JFrame {
                     try {
                         File fichero = null;
                         if (fc.getFileFilter().getDescription().equals("Archivo de texto")) {
-                            fichero = new File(fc.getSelectedFile().getPath() + ".txt");
+                            fichero = new File(fc.getSelectedFile().getPath());
                         } else {
                             fichero = fc.getSelectedFile();
                         }
+
                         Universo u = new Universo();
                         u.adminUniverso(fichero + ".txt");
                         u.cargarArchivo();
@@ -258,15 +264,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_CrearMouseClicked
 
     private void mi_cargarUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_cargarUActionPerformed
-        
+
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         int seleccion = fc.showOpenDialog(this);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             FileReader fr = null;
             try {
-                File fichero = fc.getSelectedFile();
-                
+                fichero = fc.getSelectedFile();
+
                 ta_verUNi.setText("");
                 if (fichero.isFile()) {
                     fr = new FileReader(fichero);
@@ -283,7 +289,7 @@ public class Principal extends javax.swing.JFrame {
                         lista.add(sv);
                     }
                 }
-                
+
                 jd_verUniverso.setModal(true);
                 jd_verUniverso.pack();
                 jd_verUniverso.setLocationRelativeTo(this);
@@ -302,7 +308,20 @@ public class Principal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_mi_cargarUActionPerformed
-    
+
+    private void mi_elimSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_elimSVActionPerformed
+        String aux = "";
+        Universo u = new Universo();
+        u.adminUniverso(fichero.getPath());
+        u.cargarArchivo();
+        for (Ser_Vivo sv : u.getListaSeres()) {
+            aux += "-" + u.getListaSeres().indexOf(sv) + ">" + sv.getNombre();
+        }
+        JOptionPane.showMessageDialog(this, aux);
+        JOptionPane.showInputDialog("ingrese el indice a eliminar");
+
+    }//GEN-LAST:event_mi_elimSVActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -362,4 +381,5 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTextField tf_newName;
     // End of variables declaration//GEN-END:variables
     private ArrayList<Ser_Vivo> lista = new ArrayList();
+    File fichero = null;
 }
