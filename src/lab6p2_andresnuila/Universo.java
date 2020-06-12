@@ -24,6 +24,10 @@ public class Universo {
         this.nombre = nombre;
     }
 
+    public void adminUniverso(String path) {
+        archivo = new File(path);
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -58,7 +62,7 @@ public class Universo {
         BufferedWriter bw = null;
         String aux = "";
         try {
-            fw = new FileWriter(archivo, false);
+            fw = new FileWriter(archivo, true);
             bw = new BufferedWriter(fw);
             for (Ser_Vivo sv : listaSeres) {
                 aux += sv.getNombre() + "|" + sv.getPoder() + "|" + sv.getAños() + "|" + sv.getPlaneta() + "|" + sv.getRaza() + "\n";
