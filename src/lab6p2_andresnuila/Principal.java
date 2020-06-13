@@ -184,6 +184,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.setText("Seres Vivos");
 
         mi_modSV.setText("Modificar Ser vivo");
+        mi_modSV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_modSVActionPerformed(evt);
+            }
+        });
         jMenu2.add(mi_modSV);
 
         mi_elimSV.setText("Eliminar Ser Vivos");
@@ -225,7 +230,7 @@ public class Principal extends javax.swing.JFrame {
                 BufferedWriter bw = null;
                 if (seleccion == JFileChooser.APPROVE_OPTION) {
                     try {
-                        File fichero = null;
+                        fichero = null;
                         if (fc.getFileFilter().getDescription().equals("Archivo de texto")) {
                             fichero = new File(fc.getSelectedFile().getPath());
                         } else {
@@ -327,6 +332,69 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_mi_elimSVActionPerformed
+
+    private void mi_modSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_modSVActionPerformed
+        try {
+            Universo u = new Universo();
+            u.adminUniverso(fichero.getPath());
+            u.cargarArchivo();
+            String aux = "";
+            for (Ser_Vivo sv : u.getListaSeres()) {
+                aux += u.getListaSeres().indexOf(sv) + ">" + sv.getNombre() + "\n";
+            }
+            JOptionPane.showMessageDialog(null, aux);
+            int opc = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el indice a modificar"));
+            JOptionPane.showMessageDialog(null, "1. Nombre\n2. Edad\n3. Raza\n4. Poder\n5. Planeta");
+            int mod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el punto a modificar a modificar"));
+            switch (mod) {
+                case 1:
+                    String nombre = JOptionPane.showInputDialog("Ingrese el nuevo nombre");
+                    u.getListaSeres().get(opc).setNombre(nombre);
+                    break;
+                case 2:
+                    try {
+                        String edad = JOptionPane.showInputDialog("Ingrese la nueva edad");
+                        u.getListaSeres().get(opc).setAños(edad);
+                        u.escribirArchivo();
+                    } catch (Exception e) {
+                    }
+                    break;
+                case 3:
+                    JOptionPane.showMessageDialog(this, "1. Humano 2. Amanto");
+                    int raza = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el indice de la nueva raza"));
+                    String newRaza = "";
+                    switch (raza) {
+                        case 1:
+                            newRaza = "Humano";
+                            break;
+                        case 2:
+                            newRaza = "Amanto";
+                            break;
+                    }
+                    u.getListaSeres().get(opc).setRaza(newRaza);
+                    break;
+                case 4:
+                    int newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo poder del ser"));
+                    while (newPod < 1 || newPod > 10) {
+                        JOptionPane.showMessageDialog(null, "INGRESE UN VALOR ENTRE 1 Y 10");
+                        newPod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el nuevo poder del ser"));
+                    }
+                    u.getListaSeres().get(opc).setPoder(newPod);
+                    break;
+                case 5:
+                    String newPlanet = JOptionPane.showInputDialog("Ingrese el nuevo planeta del ser");
+                    u.getListaSeres().get(opc).setPlaneta(newPlanet);
+                    break;
+                default:
+                    break;
+            }
+            JOptionPane.showMessageDialog(null, "Cambio realizado exitosamente, cargue el universo nuevamente para revisarlo");
+            u.escribirArchivo();
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_mi_modSVActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
