@@ -256,9 +256,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_mi_AñadirSeresVivosActionPerformed
 
     private void jb_CrearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_CrearMouseClicked
-        Ser_Vivo sv = new Ser_Vivo(tf_newName.getText(), tf_newAños.getText(),
-                tf_NewPlaneta.getText(), cb_Raza.getSelectedItem().toString(),
-                Integer.parseInt(js_poder.getValue().toString()));
+        Ser_Vivo sv = new Ser_Vivo(tf_newName.getText(),
+                Integer.parseInt(js_poder.getValue().toString()), tf_newAños.getText(),
+                tf_NewPlaneta.getText(), cb_Raza.getSelectedItem().toString());
         lista.add(sv);
         JOptionPane.showMessageDialog(this, "CREADO EXITOSAMENTE");
     }//GEN-LAST:event_jb_CrearMouseClicked
@@ -282,14 +282,14 @@ public class Principal extends javax.swing.JFrame {
                         ta_verUNi.append(linea);
                         ta_verUNi.append("\n");
                     }
-                    Universo u = new Universo();
-                    u.adminUniverso(fichero.getPath());
-                    u.cargarArchivo();
-                    for (Ser_Vivo sv : u.getListaSeres()) {
-                        lista.add(sv);
-                    }
-                }
 
+                }
+                Universo u = new Universo();
+                u.adminUniverso(fichero.getPath());
+                u.cargarArchivo();
+                for (Ser_Vivo sv : u.getListaSeres()) {
+                    lista.add(sv);
+                }
                 jd_verUniverso.setModal(true);
                 jd_verUniverso.pack();
                 jd_verUniverso.setLocationRelativeTo(this);
@@ -310,16 +310,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_mi_cargarUActionPerformed
 
     private void mi_elimSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_elimSVActionPerformed
-        String aux = "";
-        Universo u = new Universo();
-        u.adminUniverso(fichero.getPath());
-        u.cargarArchivo();
-        for (Ser_Vivo sv : u.getListaSeres()) {
-            aux += "-" + u.getListaSeres().indexOf(sv) + ">" + sv.getNombre();
+        try {
+            Universo u = new Universo();
+            u.adminUniverso(fichero.getPath());
+            u.cargarArchivo();
+            String aux = "";
+            for (Ser_Vivo sv : u.getListaSeres()) {
+                aux += u.getListaSeres().indexOf(sv) + ">" + sv.getNombre() + "\n";
+            }
+            JOptionPane.showMessageDialog(this, aux);
+            int opc = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el indice a eliminar"));
+            u.getListaSeres().remove(opc);
+            u.escribirArchivo();
+            JOptionPane.showMessageDialog(this, "Eliminado exitosamente");
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        JOptionPane.showMessageDialog(this, aux);
-        JOptionPane.showInputDialog("ingrese el indice a eliminar");
-
     }//GEN-LAST:event_mi_elimSVActionPerformed
 
     public static void main(String args[]) {

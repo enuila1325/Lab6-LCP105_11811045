@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Universo {
 
@@ -63,13 +64,11 @@ public class Universo {
         String aux = "";
         for (Ser_Vivo sv : listaSeres) {
             try {
-                fw = new FileWriter(archivo, true);
+                fw = new FileWriter(archivo, false);
                 bw = new BufferedWriter(fw);
-                aux += sv.getNombre() + "|" + sv.getPoder() + "|" + sv.getAños()
-                        + "|" + sv.getPlaneta() + "|" + sv.getRaza() + "\n";
+                aux += sv.getNombre() + ";" + sv.getPoder() + ";" + sv.getAños()
+                        + ";" + sv.getPlaneta() + ";" + sv.getRaza() + "\n";
                 bw.write(aux);
-                bw.newLine();
-
             } catch (Exception e) {
             }
         }
@@ -80,18 +79,16 @@ public class Universo {
 
     public void cargarArchivo() {
         try {
-            FileReader fr = null;
-            BufferedReader br = null;
+            FileReader fr = new FileReader(archivo);
+            BufferedReader br = new BufferedReader(fr);
             listaSeres = new ArrayList();
-            fr = new FileReader(archivo);
-            br = new BufferedReader(fr);
             if (archivo.exists()) {
                 String linea = "";
                 try {
                     while ((linea = br.readLine()) != null) {
                         try {
-                            String datos[] = linea.split("|");
-                            Ser_Vivo sv = new Ser_Vivo(datos[0], datos[1], datos[2], datos[3], Integer.parseInt(datos[4]));
+                            String datos[] = linea.split(";");
+                            Ser_Vivo sv = new Ser_Vivo(datos[0], Integer.parseInt(datos[1]), datos[2], datos[3], datos[4]);
                             listaSeres.add(sv);
                         } catch (Exception ex) {
                         }
@@ -99,7 +96,7 @@ public class Universo {
                 } catch (IOException ex) {
                     Logger.getLogger(Universo.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } //FIN IF
+            }
 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Universo.class.getName()).log(Level.SEVERE, null, ex);
