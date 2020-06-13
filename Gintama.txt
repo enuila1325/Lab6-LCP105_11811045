@@ -1,0 +1,10 @@
+Kagura;7;16;Tierra;Humano
+OKita Sougo;8;17;Tierra;Humano
+Shouyo Yoshida;6;22;Tierra;Humano
+Gintoki Sakata;8;28;Tierra;Humano
+Shinsuke Takasugi;7;28;Tierra;Humano
+Katsura Kotarou;7;26;Tierra;Humano
+Shinpachi Shimura;6;16;Tierra;Humano
+Hijikata Toushirou;8;27;Tierra;Humano
+Tetsuko Murata;6;20;Tierra;Humano
+Tae Shimura;4;18;Tierra;Humano
