@@ -1,7 +1,7 @@
 Andres;9;19;Tierra;Humano
 Enrique;5;19;Tierra;Humano
 Nuila;10;28;Marte;Amanto
-Luis;10;28;Jupiter;Amanto
+Luis;10;18;Jupiter;Amanto
 Peter;8;35;k98-poLOrT;Humano
 Peter;8;35;k98-poLOrT;Humano
 Ottmar;9;22;Saturno;Amanto
